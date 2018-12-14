@@ -3,19 +3,17 @@
 
 from random import randint
 import time, os, sys
-
+#Default inventory.
+f = open("inventory.txt","r")
 #Important stuff/preset stuff
 system=os.name
 secret = False
 command = ""
+inventory = f.read().split(',')
 action = ""
 health = 100
 progress = False
 word = ["traveller","you common dandy", "rumbleyguts", "stretchyskin"]
-#Default inventory. 
-"""how hard would a save system for this be? 
-Save to .txt file and insert into array based on what's saved in that file/save to file when items are removed/added maybe? hm """
-inventory = ["Wooden totem"]
 #System Function stuff
 #Check if system is windows or linux (fuck you OSX)
 def cistest(system, command):
