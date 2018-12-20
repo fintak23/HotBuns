@@ -61,19 +61,20 @@ class Player:
         self.currentRoom.action(self, command, silent)
 
 #Instantiate two rooms and the player in the first room
-firstRoom = Room('First Room', 'Full of beans')
-secondRoom = Room('Second Room', 'Empty of beans')
-theBoy = Player(firstRoom)
+world = {}
+world['first']  = Room('First Room', 'Full of beans')
+world['second'] = Room('Second Room', 'Empty of beans')
+theBoy = Player(world['first'])
 
 #Link first room's North to second room
-firstRoom.addOrUpdateLink('n', secondRoom)
+world['first'].addOrUpdateLink('n', world['second'])
 
 #Add room-specific action to second room
 def fillWithBeans(room, player, command):
     room.description = 'Full of beans'
     print('You fill ' + room.name + ' with beans')
     player.action('look', True)
-secondRoom.actions['fill with beans'] = fillWithBeans
+world['second'].actions['fill with beans'] = fillWithBeans
 
 
 #Perform the stuff. In the real game this would be player input, not written here
