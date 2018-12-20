@@ -15,7 +15,7 @@ def confused(room, player, command):
     print("u wot m8???")
     
 globalActions['lookRoom'] = lookRoom
-globalActions['n'] = move
+globalActions['n'] = globalActions['e'] = globalActions['s'] = globalActions['w'] = move
 globalActions[None] = confused
 
 #Translator to allow multiple player commands to access the same action,
@@ -62,23 +62,27 @@ class Player:
 
 #Instantiate two rooms and the player in the first room
 world = {}
-world['first']  = Room('First Room', 'Full of beans')
-world['second'] = Room('Second Room', 'Empty of beans')
-theBoy = Player(world['first'])
-
-#Link first room's North to second room
-world['first'].addOrUpdateLink('n', world['second'])
-
-#Add room-specific action to second room
-def fillWithBeans(room, player, command):
-    room.description = 'Full of beans'
-    print('You fill ' + room.name + ' with beans')
-    player.action('look', True)
-world['second'].actions['fill with beans'] = fillWithBeans
+world['area1'] = Room(
+    "area1", 
+    "You open your eyes. You're standing in the south of a small circular courtyard paved with bricks. Vines grow between many of these bricks. Surrounding the edges of the courtyard are a ring of towering, identical stone statues. The statues stand so close together that you cannot see through any of the small spaces between them. Warm light filters through these small gaps. In the center of the courtyard to the north is a small raised pool. What will you do?", 
+    {'n': 'pool'}
+)
+world['pool'] = Room(
+    'pool',
+    'You are standing by a small raised pool',
+    {'s': 'area1'}
+)
+world['statues'] = Room(
+    'statues',
+    'You are facing',
+    {'s': 'area1'}
+)
+world['black'] = Room(
+	'black',
+	"Everything is black, like everything everywhere. Lots of smells though, and some feelings too",
+	{'s': 'black','n':'black', 'e': 'black', 'w': 'black'}
+)	
+theBoy = Player(world['area1'])
 
 
 #Perform the stuff. In the real game this would be player input, not written here
-theBoy.action('look around')
-theBoy.action('n')
-theBoy.action('fill with beans')
-theBoy.action('squeeze buttocks')
